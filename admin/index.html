@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- Login Container -->
+    <div id="loginContainer" class="login-container">
+        <form id="loginForm" class="login-form">
+            <h2>Admin Login</h2>
+            <div id="loginError" class="error-msg" style="display:none; color:red; margin-bottom:1rem; font-size:0.9rem;"></div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn" style="width:100%">Login</button>
+            <p style="text-align:center; margin-top:1rem; font-size:0.85rem;"><a href="../">Kembali ke Web</a></p>
+        </form>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div id="dashboardContainer" class="dashboard-container" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" data-target="view-projects" class="active"><i class="fas fa-briefcase"></i> Kelola Proyek</a></li>
+                <li><a href="#" data-target="view-site"><i class="fas fa-file-alt"></i> Halaman Statis</a></li>
+                <li><a href="#" data-target="view-messages"><i class="fas fa-envelope"></i> Pesan Masuk</a></li>
+                <li><a href="#" data-target="view-users"><i class="fas fa-users"></i> Kelola Pengguna</a></li>
+                <li><a href="#" id="logoutBtn" style="color: #ff4757;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+            <div style="padding: 1.5rem; border-top: 1px solid #2a3542; margin-top: auto;">
+                <a href="../" style="color: var(--text-sidebar); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: var(--transition);" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--text-sidebar)'">
+                    <i class="fas fa-external-link-alt" style="width: 25px;"></i> Ke Website
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <div class="mobile-nav" style="display: none; margin-bottom: 1rem;">
+                <button id="adminMenuBtn" class="btn" style="background: transparent; color: var(--text-main); border: 1px solid #ddd; padding: 0.5rem 1rem;"><i class="fas fa-bars"></i> Menu</button>
+            </div>
+
+            <!-- Projects View -->
+            <section id="view-projects" class="view active">
+                <div class="header-flex">
+                    <h2>Kelola Proyek</h2>
+                    <button class="btn" id="btnAddProject"><i class="fas fa-plus"></i> Tambah Proyek</button>
+                </div>
+                <div class="projects-table-wrapper">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Gambar</th>
+                                <th>Judul</th>
+                                <th>Teknologi</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectsTableBody">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Site Content View -->
+            <section id="view-site" class="view">
+                <h2>Halaman Statis</h2>
+                <form id="siteForm" class="admin-form">
+                    <div class="form-group">
+                        <label>Hero Title</label>
+                        <input type="text" id="siteHeroTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Hero Subtitle</label>
+                        <input type="text" id="siteHeroSubtitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>About Bio</label>
+                        <textarea id="siteAboutBio" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Keahlian (pisahkan dengan koma)</label>
+                        <input type="text" id="siteSkills" required>
+                    </div>
+                    <div class="form-group">
+                        <label>LinkedIn URL</label>
+                        <input type="text" id="siteLinkedIn">
+                    </div>
+                    <div class="form-group">
+                        <label>GitHub URL</label>
+                        <input type="text" id="siteGitHub">
+                    </div>
+                    <div class="form-group">
+                        <label>Instagram URL</label>
+                        <input type="text" id="siteInstagram">
+                    </div>
+                    <button type="submit" class="btn">Simpan Perubahan</button>
+                </form>
+            </section>
+
+            <!-- Messages View -->
+            <section id="view-messages" class="view">
+                <h2>Pesan Masuk</h2>
+                <div class="projects-table-wrapper" style="margin-top: 1.5rem;">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Pesan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="messagesTableBody">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Users View -->
+            <section id="view-users" class="view">
+                <div class="header-flex">
+                    <h2>Kelola Pengguna Admin</h2>
+                    <button class="btn" id="btnAddUser"><i class="fas fa-plus"></i> Tambah User</button>
+                </div>
+                <div class="projects-table-wrapper">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- User Form Modal -->
+    <div id="userFormModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-modal" id="closeUserModal">&times;</span>
+            <h3 id="userModalTitle">Tambah User</h3>
+            <form id="userForm" class="admin-form" style="margin-top: 1rem;">
+                <input type="hidden" id="userId">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="userUsername" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="userPassword" placeholder="Biarkan kosong jika tidak ingin mengubah password">
+                </div>
+                <button type="submit" class="btn">Simpan User</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Project Form Modal -->
+    <div id="projectFormModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-modal" id="closeProjectModal">&times;</span>
+            <h3 id="projectModalTitle">Tambah Proyek</h3>
+            <form id="projectForm" class="admin-form" style="margin-top: 1rem;">
+                <input type="hidden" id="projId">
+                <div class="form-group">
+                    <label>Judul Proyek</label>
+                    <input type="text" id="projTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea id="projDesc" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Teknologi (pisahkan koma)</label>
+                    <input type="text" id="projTech" required>
+                </div>
+                <div class="form-group">
+                    <label>Gambar Proyek</label>
+                    <input type="file" id="projImgFile" accept="image/*" multiple style="margin-bottom: 0.5rem;">
+                    <p style="font-size: 0.8rem; color: #666; margin-bottom: 0.5rem;">Atau masukkan URL gambar (pisahkan koma jika banyak):</p>
+                    <input type="text" id="projImgUrl" placeholder="https://...">
+                    <input type="hidden" id="projImg">
+                </div>
+                <div class="form-group">
+                    <label>Link Demo (opsional)</label>
+                    <input type="text" id="projDemo">
+                </div>
+                <div class="form-group">
+                    <label>Link GitHub (opsional)</label>
+                    <input type="text" id="projGithub">
+                </div>
+                <button type="submit" class="btn">Simpan Proyek</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../data.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
